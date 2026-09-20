@@ -439,11 +439,8 @@ remove_uhttpd_dependency
 cd "$BASE_PATH/../$BUILD_DIR"
 make defconfig
 # ========== 新增：清除mosdns相关配置，解决geo2txt缺失报错 ==========
-sed -i '/CONFIG_PACKAGE_luci-app-mosdns/d' .config
-sed -i '/CONFIG_PACKAGE_luci-i18n-mosdns-zh-cn/d' .config
-sed -i '/CONFIG_PACKAGE_geo2txt/d' .config
-echo "===== mosdns config removed ====="
-grep -E "CONFIG_PACKAGE_luci-app-mosdns|geo2txt" .config || echo "Confirm: no mosdns config exists"
+sed -i 's/^CONFIG_PACKAGE_luci-app-mosdns=y/CONFIG_PACKAGE_luci-app-mosdns=n/g' .config
+sed -i 's/^CONFIG_PACKAGE_luci-app-mosdns=m/CONFIG_PACKAGE_luci-app-mosdns=n/g' .config
 # ================================================================
 if grep -qE "^CONFIG_TARGET_x86_64=y" "$CONFIG_FILE"; then
     DISTFEEDS_PATH="$BASE_PATH/../$BUILD_DIR/package/emortal/default-settings/files/99-distfeeds.conf"
